@@ -1,0 +1,15 @@
+.task {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.task > i {
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
+
+.task .strike {
+    text-decoration: line-through;
+}

@@ -1,0 +1,42 @@
+[
+    {
+        "id": "1",
+        "tenantName": "Victor Githui",
+        "propertyName": "Githui Villas",
+        "propertyLocation": "Tatu City, Ruiru",
+        "phone": "0701230892",
+        "email": "victorgithuim@gmail.com",
+        "repairRequest": "Repair water tap and shower, they are leaking",
+        "requestStatus": "approved"
+    },
+    {
+        "id": "2",
+        "tenantName": "Byron Kimani",
+        "propertyName": "Githui Villas",
+        "propertyLocation": "Tatu City, Ruiru",
+        "phone": "0701230892",
+        "email": "victorgithuim@gmail.com",
+        "repairRequest": "Repair water tap and shower, they are leaking.",
+        "requestStatus": "onHold"
+    },
+    {
+        "id": "3",
+        "tenantName": "Tracy Rutiari",
+        "propertyName": "Githui Villas",
+        "propertyLocation": "Tatu City, Ruiru",
+        "phone": "0701230892",
+        "email": "victorgithuim@gmail.com",
+        "repairRequest": "Repair water tap and shower, they are leaking",
+        "requestStatus": "disapproved"
+    },
+    {
+        "id": "4",
+        "tenantName": "Rose Wambui",
+        "propertyName": "Githui Villas",
+        "propertyLocation": "Tatu City, Ruiru",
+        "phone": "0701230892",
+        "email": "victorgithuim@gmail.com",
+        "repairRequest": "Repair water tap and shower, they are leaking",
+        "requestStatus": "approved"
+    }
+]

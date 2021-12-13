@@ -1,0 +1,27 @@
+[
+    {
+        "display_name": "Dashboard",
+        "route": "/",
+        "icon": "bx bx-category-alt"
+    },
+    {
+        "display_name": "Nairobi - Eldoret",
+        "route": "/destination?final-destination=eldoret",
+        "icon": "bx bxs-bus"
+    },
+    {
+        "display_name": "Eldoret - Nairobi",
+        "route": "/destination?final-destination=nairobi",
+        "icon": "bx bxs-bus"
+    },
+    {
+        "display_name": "Car List",
+        "route": "/Trip List",
+        "icon": "bx bx-list-ol"
+    },
+    {
+        "display_name": "Profile",
+        "route": "/profile",
+        "icon": "bx bxs-user"
+    }
+]

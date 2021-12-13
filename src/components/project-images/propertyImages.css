@@ -1,0 +1,37 @@
+.property__image-main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.property__image-main > img {
+    height: 300px;
+}
+.property__image-subimage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.property__image-subimage > img {
+    height: 100px;
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+    cursor: pointer;
+}
+
+.property__image-addimage {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.property__image-addimage > i {
+    font-size: 50px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .property__image-main > img {
+        height: 200px;
+        margin-top: 2rem;
+    }
+}

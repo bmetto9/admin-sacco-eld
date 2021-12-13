@@ -1,0 +1,20 @@
+.profile__image{
+    height: 140px;
+    width: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile__image > img {
+    width: 100%;
+}
+
+.profile__icon{
+    display: flex;
+    justify-content: center;
+}
+
+.profile__icon > i{
+    font-size: 8rem;
+}
+

@@ -1,0 +1,12 @@
+[
+    {
+        "icon": "bx bx-building",
+        "count": "60",
+        "title": "Total Spaces"
+    },
+    {
+        "icon": "bx bxs-user-detail",
+        "count": "60",
+        "title": "Occupied Spaces"
+    }
+]

@@ -1,0 +1,12 @@
+[
+    {
+        "icon": "bx bx-bus",
+        "count": "100",
+        "title": "Total Number of Buses"
+    },
+    {
+        "icon": "bx bxs-book-open",
+        "count": "60",
+        "title": "Total Bookings"
+    }
+]
