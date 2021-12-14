@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import queryString from 'query-string'
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Wrapper from '../components/wrapper/Wrapper';
 import Form from '../components/form/Form';
+import { db } from '../helpers/firebaseConf';
+import { addDoc, collection, onSnapshot } from 'firebase/firestore';
+import { validEmail, validPhoneNumber } from '../helpers/RegexValidation';
 
 const renderAddForm = (item, index) => (
     <React.Fragment key={index}>
@@ -17,10 +20,10 @@ const renderAddForm = (item, index) => (
         >
             
             {
-                item.type === "input" ? (
+                item.type === "input" || "date" || "time" ? (
                     <input
                         required
-                        type="text"
+                        type={item.type === "input" ? "text" : "text" && item.type === "date" ? "date" : "text" && item.type === "time" ? "time" : "text" }
                         placeholder={item.placeholder}
                         value={item.stateValue}
                         onChange={item.onChange}
@@ -58,7 +61,9 @@ const renderAddForm = (item, index) => (
 )
 
 function Add() {
+
     const [addFormType, setAddFormType] = useState();
+    const [loading, setLoading] = useState(false);
 
     //Add Trip
     const [date, setDate] = useState();
@@ -73,15 +78,30 @@ function Add() {
     const [numberPlate, setNumberPlate] = useState();
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
+    const [carListData, setCarListData] = useState([]);
 
     useEffect(() => {
         const { type } = queryString.parse(window.location.search);
-        setAddFormType(type)
+        setAddFormType(type);
+
+        const unsub = onSnapshot(collection(db, "cars"), (snapshot) => {
+            console.log(snapshot.docs.map(doc => doc.data()));
+            const carData = snapshot.docs.map(doc => doc.data());
+            carData.map(data => {
+                setCarListData([...carListData], {
+                    val: data.numberPlate,
+                    placeholder: data.numberPlate
+                })
+            })
+        });
+        // const data = getDocs(collection(db, "cars"));
+        // console.log(data);
+        return unsub
     }, []);
 
     const addTripInputData = [
         {
-            type: 'input',
+            type: 'date',
             placeholder: 'Date',
             value: date,
             onChange: e => setDate(e.target.value)
@@ -104,13 +124,13 @@ function Add() {
             onChange: (e) => setDepatureTime(e.target.value)
         },
         {
-            type: 'input',
+            type: 'time',
             placeholder: 'Depature Time',
             value: depatureTime,
             onChange: e => setDepatureTime(e.target.value)
         },
         {
-            type: 'input',
+            type: 'time',
             placeholder: 'Arrival Time',
             value: arrivalTime,
             onChange: e => setArrivalTime(e.target.value)
@@ -122,12 +142,12 @@ function Add() {
             groupLabel: 'Car',
             values: [
                 {
-                    val: 'kdd345D',
-                    placeholder: 'KDD 345D'
+                    val: 'nairobiNakuru',
+                    placeholder: 'Nairobi - Nakuru'
                 },
                 {
-                    val: 'kdb555B',
-                    placeholder: 'KDB 555B'
+                    val: 'nakuruNakuru',
+                    placeholder: 'Nakuru - Nairobi'
                 }
             ],
             onChange: (e) => setCarPlate(e.target.value)
@@ -141,7 +161,29 @@ function Add() {
         
     ]
 
-    const handleAddTripForm = () => {}
+    const handleAddTripForm = (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        // try {
+        //     if (!validEmail.test(email)){
+        //         alert("Invalid Email or Phone Number format")
+        //     } else {
+        //         const trip = await addDoc(collection(db, "trip"), {
+        //             driver: driverName,
+        //             email: email,
+        //             numberPlate: numberPlate,
+        //             phone: phone
+        //         });
+        //         console.log(car);
+        //     }
+            
+            
+        //     return <Navigate to="/car-list" />
+        // } catch (err){
+        //     console.log(err.message);
+        // }
+    }
 
     const addCarInputData = [
         {
@@ -171,7 +213,29 @@ function Add() {
         
     ]
 
-    const handleAddCarForm = () => {}
+    const handleAddCarForm = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            if (!validEmail.test(email)){
+                alert("Invalid Email or Phone Number format")
+            } else {
+                const car = await addDoc(collection(db, "cars"), {
+                    driver: driverName,
+                    email: email,
+                    numberPlate: numberPlate,
+                    phone: phone
+                });
+                console.log(car);
+            }
+            
+            
+            return <Navigate to="/car-list" />
+        } catch (err){
+            console.log(err.message);
+        }
+    }
 
     return (
         <div>

@@ -4,11 +4,11 @@ import Wrapper from '../wrapper/Wrapper'
 import './topNav.css'
 import Dropdown from '../dropdown/Dropdown'
 import { Link } from 'react-router-dom'
-import app from '../../helpers/firebaseConf'
 
 import user_menu from '../../assets/JsonData/user_menus.json'
 import notifications from '../../assets/JsonData/notification.json'
 import ThemeMenu from '../thememenu/ThemeMenu'
+import { app } from '../../helpers/firebaseConf'
 
 const curr_user = {
     display_name: "Victor Githui",
@@ -18,10 +18,10 @@ const curr_user = {
 const renderUserToggle = (user) => (
     <div className="topnav__rigth-user">
         <div className="topnav__rigth-user-image">
-            <img src={user.image} alt="" />
+            <img src="https://res.cloudinary.com/emacon-production/image/upload/v1637569261/Bizmkononi/management_j4a9e6.svg" alt="" />
         </div>
         <div className="topnav__rigth-user-name">
-            {user.display_name}
+            {user}
         </div>
     </div>
 )
@@ -50,7 +50,7 @@ function TopNav(props) {
             <div className="topnav__right">
                 <div className="topnav__right-item">
                     <Dropdown
-                        customToggle={() => renderUserToggle(curr_user)}
+                        customToggle={() => renderUserToggle(props.name)}
                         contentData={user_menu}
                         renderItems={(item, index) => renderUserMenu(item, index)}
                     />

@@ -1,17 +1,18 @@
-import React, { useState } from 'react'
+import { collection, getDocs, onSnapshot } from 'firebase/firestore'
+import React, { useState, useEffect } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Button from '../components/button/Button'
 import Table from '../components/table/Table'
 import Wrapper from '../components/wrapper/Wrapper'
+import { db } from '../helpers/firebaseConf'
 
 const destinationData = {
     head: [
         'Car Plate',
         'Driver Name',
         'Phone Number',
-        'Email Address',
-        ''
+        'Email Address'
     ],
     body: [
         {
@@ -47,16 +48,16 @@ const renderHead = (item, index) => (
 
 const renderBody = (item, index) => (
     <tr key={index}>
-        <td>{item.carPlate}</td>
-        <td>{item.driverName}</td>
+        <td>{item.numberPlate}</td>
+        <td>{item.driver}</td>
         <td>{item.phone}</td>
         <td>{item.email}</td>
-        <td>
+        {/* <td>
             <Button
                 action={`/agent?id=${item.id}`}
                 content="Delete"
             />
-        </td>
+        </td> */}
     </tr>
 )
 
@@ -67,6 +68,17 @@ const renderLoading = () => (
 
 function Cars() {
     const [loading, setLoading] = useState();
+    const [carListData, setCarListData] = useState([]);
+
+    useEffect(() => {
+        const unsub = onSnapshot(collection(db, "cars"), (snapshot) => {
+            console.log(snapshot.docs.map(doc => doc.data()));
+            setCarListData(snapshot.docs.map(doc => doc.data()))
+        });
+        // const data = getDocs(collection(db, "cars"));
+        // console.log(data);
+        return unsub
+    },[]);
 
     return (
         <div>
@@ -95,12 +107,12 @@ function Cars() {
                                     {renderLoading()}
                                 </Wrapper>
                             ) : (
-                                destinationData.body.length &&
+                                carListData.length &&
                                     <Table
                                         limit="10"
                                         headData={destinationData.head}
                                         renderHead={(item, index) => renderHead(item, index)}
-                                        bodyData={destinationData.body}
+                                        bodyData={carListData}
                                         renderBody={(item, index) => renderBody(item, index)}
                                     />
                             )

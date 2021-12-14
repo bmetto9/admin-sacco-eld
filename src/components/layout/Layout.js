@@ -15,9 +15,10 @@ import TripBookings from '../../pages/TripBookings'
 import Cars from '../../pages/Cars'
 import Add from '../../pages/Add'
 import Profile from '../../pages/Profile'
-import { AuthContext, AuthProvider } from '../../Context/Auth'
+import AuthProvider, { AuthContext } from '../../Context/Auth'
 import { validEmail } from '../../helpers/RegexValidation'
-import app from '../../helpers/firebaseConf'
+import app, { auth } from '../../helpers/firebaseConf'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
 const renderLoading = () => (
     <Spinner animation="border" variant="light"/>
@@ -85,7 +86,7 @@ const renderForgotPasswordBtn = (loading) => (
 function Layout(props) {
     // const { currentUser } = useContext(AuthContext);
 
-    const [token, setToken] = useState('githui');
+    const [token, setToken] = useState();
     const [loading, setLoading] = useState(false);
     const [toggle, setToggle] = useState(true);
     const [ authType, setAuthType] = useState('sign-in');
@@ -93,6 +94,8 @@ function Layout(props) {
     const [password, setPassword] = useState();
     const [showPassword, setShowPassword]= useState(false);
     const [email, setEmail] = useState();
+
+    const [topNavName, setTopNavName] = useState();
 
     const [emailErr, setEmailErr] = useState(false);
 
@@ -115,23 +118,6 @@ function Layout(props) {
         setToggle(!toggle)
     }
 
-    const handleSignIn = useCallback(async e => {
-        e.preventDefault();
-
-        if (!validEmail.test(email)){
-            setEmailErr(true);
-        } else {
-            try {
-                await app
-                    .auth()
-                    .signInWithEmailAndPassword(email, password);
-                // setToken(true);
-            } catch (error) {
-                alert(error)
-            }
-        }
-    }, [props.history])
-
     const handleForgotPassword = () => {
         setLoading(true)
     }
@@ -151,9 +137,9 @@ function Layout(props) {
     const signInInputData = [
         {
             type: 'input',
-            placeholder: 'Username',
-            value: userName,
-            onChange: (e) => setUserName(e.target.value)
+            placeholder: 'Email Address',
+            value: email,
+            onChange: (e) => setEmail(e.target.value)
         },
         {
             type: 'password',
@@ -164,6 +150,28 @@ function Layout(props) {
             handleShowPassword: handleShowPassword
         }
     ]
+
+    const handleSignInForm = async (e) => {
+        e.preventDefault();
+
+        setLoading(true);
+
+        try {
+            if (!validEmail.test(email)){
+                alert('Invalid Email Format')
+                setLoading(false);
+            } else {
+                const user = await signInWithEmailAndPassword(auth, email, password);
+                console.log(user);
+                setLoading(false);
+                setToken(user.user.uid)
+                setTopNavName(user.user.email)
+            }
+        } catch (error) {
+            alert(error.message);
+            console.log(error);
+        }
+    }
 
     const forgotPasswordInputData = [
         {
@@ -208,7 +216,7 @@ function Layout(props) {
                                                 (item, index) => renderForgotPasswordForm(item, index)
                                             }
                                             buttonContent={authType === 'sign-in' ? renderSignInBtn(loading) : renderForgotPasswordBtn(loading)}
-                                            handleForm={authType === 'sign-in' ? handleSignIn : handleForgotPassword}
+                                            handleForm={authType === 'sign-in' ? handleSignInForm : handleForgotPassword}
                                         />
                                         <Wrapper position="center">
                                             <a 
@@ -228,7 +236,7 @@ function Layout(props) {
                             <div className={`layout ${themeReducer.mode} ${themeReducer.color}`}>
                                 <Sidebar {...props} menuToggle={toggle}/>
                                 <div className={`layout__content ${toggle ? "" : "toggle"}`}>
-                                    <TopNav handleToggleMenu={handleToogleMenu}/>
+                                    <TopNav handleToggleMenu={handleToogleMenu} name={topNavName}/>
                                     <div className="layout__content-main">
                                         <Routes>
                                             <Route path="/" exact element={<Dashboard/>}/>
