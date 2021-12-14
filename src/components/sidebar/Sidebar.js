@@ -25,7 +25,7 @@ const SidebarItem = (props) => {
 }
 
 function Sidebar(props) {
-    const [activeMenu, setActiveMenu] = useState(sidebar_items.findIndex(item => item.route === window.location.pathname))
+    const [activeMenu, setActiveMenu] = useState();
     const activeItem = activeMenu
     
     const imageToggle = props.menuToggle ? "toggle" : "";

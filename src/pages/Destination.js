@@ -86,7 +86,7 @@ function Destination() {
                         <Wrapper>
                             <Button
                                 icon="bx bx-plus"
-                                action="/addForm?type=nairobi-eldoret-trip+0"
+                                action="/add-form?type=trip"
                                 content="Add Nairobi - Eldoret Trip"
                             />
                         </Wrapper>

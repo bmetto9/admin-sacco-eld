@@ -82,7 +82,7 @@ function Cars() {
                         <Wrapper>
                             <Button
                                 icon="bx bx-plus"
-                                action="/addForm?type=car"
+                                action="/add-form?type=car"
                                 content="Add Car"
                             />
                         </Wrapper>

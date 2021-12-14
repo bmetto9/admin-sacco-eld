@@ -83,9 +83,9 @@ const renderForgotPasswordBtn = (loading) => (
 
 
 function Layout(props) {
-    const { currentUser } = useContext(AuthContext);
+    // const { currentUser } = useContext(AuthContext);
 
-    const [token, setToken] = useState();
+    const [token, setToken] = useState('githui');
     const [loading, setLoading] = useState(false);
     const [toggle, setToggle] = useState(true);
     const [ authType, setAuthType] = useState('sign-in');
@@ -232,6 +232,10 @@ function Layout(props) {
                                     <div className="layout__content-main">
                                         <Routes>
                                             <Route path="/" exact element={<Dashboard/>}/>
+                                            <Route path='/destination' element={<Destination/>}/>
+                                            <Route path='/car-list' element={<Cars/>} />
+                                            <Route path='/add-form' element={<Add/>} />
+                                            <Route path='/profile' element={<Profile/>} />
                                         </Routes>    
 
                                         {/* <Dashboard/> */}

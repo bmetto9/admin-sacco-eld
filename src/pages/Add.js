@@ -76,7 +76,7 @@ function Add() {
 
     useEffect(() => {
         const { type } = queryString.parse(window.location.search);
-        setAddFormType('car')
+        setAddFormType(type)
     }, []);
 
     const addTripInputData = [
@@ -176,11 +176,11 @@ function Add() {
     return (
         <div>
             <h2 className='page-header'>
-                <Link to={addFormType === 'trip' ? '/destinations' : '/'}>
+                <Link to={addFormType === 'trip' ? '/destination' : '/'  && addFormType === 'car' ? '/car-list' : '/'}>
                     <i class='bx bx-chevron-left'></i>
                 </Link>
                 {
-                    addFormType === 'trip' ? 'Add Trip' : 'Add Form'
+                    addFormType === 'trip' ? 'Add Trip' : 'Add Form' && addFormType === 'car' ? 'Add Car' : 'Add Form'
                 }
             </h2>
 

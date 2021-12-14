@@ -16,7 +16,7 @@
     },
     {
         "display_name": "Car List",
-        "route": "/Trip List",
+        "route": "/car-list",
         "icon": "bx bx-list-ol"
     },
     {
